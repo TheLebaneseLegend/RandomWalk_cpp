@@ -10,12 +10,10 @@ int RECT_WIDTH = 10;
 int RECT_HEIGHT = 10;
 
 int main() {
-    srand(time(NULL));
-
-
 
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
+    std::vector<SDL_Rect> rects;
 
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
@@ -24,8 +22,12 @@ int main() {
     SDL_RenderClear(renderer);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_Rect rect = {(SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT};
-    SDL_RenderFillRect(renderer, &rect);
+    SDL_Rect rect1 = {(SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT};
+    SDL_RenderFillRect(renderer, &rect1);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_Rect rect2 = {(SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT};
+    SDL_RenderFillRect(renderer, &rect2);
 
     SDL_RenderPresent(renderer);
 
@@ -39,27 +41,56 @@ int main() {
             }
         }
 
-        int randNum = (rand() % 4) + 1;
-        switch (randNum) {
+        int randNum1 = (rand() % 4) + 1;
+        int randNum2 = (rand() % 4) + 1;
+
+        switch (randNum1) {
             case 1:
-                rect.x += 10;
+                rect1.x += 10;
                 break;
             case 2:
-                rect.y += 10;
+                rect1.y += 10;
                 break;
             case 3:
-                rect.x -= 10;
+                rect1.x -= 10;
                 break;
             case 4:
-                rect.y -= 10;
+                rect1.y -= 10;
+                break;
+            default:
                 break;
         }
 
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderFillRect(renderer, &rect);
-            SDL_RenderPresent(renderer);
+        switch (randNum2) {
+            case 1:
+                rect2.x += 10;
+                break;
+            case 2:
+                rect2.y += 10;
+                break;
+            case 3:
+                rect2.x -= 10;
+                break;
+            case 4:
+                rect2.y -= 10;
+                break;
+            default:
+                break;
+        }
 
-        SDL_Delay(1000);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &rect1);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &rect2);
+
+        SDL_RenderPresent(renderer);
+
+
+        SDL_Delay(200);
+
+        std::cout << randNum1 << " " << randNum2 << std::endl;
     }
 
 

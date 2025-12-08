@@ -8,9 +8,6 @@ include_directories(${SDL2_PATH}/include/SDL2)
 link_directories(${SDL2_PATH}/lib)
 
 file(GLOB_RECURSE SOURCES
-        src/core/*.cpp
-        src/rendering/*.cpp
-        src/app/*.cpp
         main.cpp
 )
 
