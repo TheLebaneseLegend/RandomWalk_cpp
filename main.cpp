@@ -38,8 +38,6 @@ int main() {
     //create struct to store rectangles at each frame, holds trails
     walker walker1 = walker((SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT, 0, 0, 0, 255);
 
-    //set rectangle color
-    walker1.set_color(0, 0, 0, 255);
 
     //create vector to store trail of rectangle
     std::vector<walker> walkers;

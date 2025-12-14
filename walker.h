@@ -13,12 +13,10 @@ public:
     SDL_Rect rect;
     SDL_Color color;
 
-    void set_color(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
-    void create_rect(int x, int y, int w, int h);
     void set_pos(int x, int y);
     void move(int x, int y);
 
-    walker(int x, int y, int w, int h, int r, int g, int b, int a);
+    walker(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
 };
 
