@@ -11,6 +11,8 @@ file(GLOB_RECURSE SOURCES
         main.cpp
 )
 
-add_executable(RandomWalk ${SOURCES})
+add_executable(RandomWalk ${SOURCES}
+        walker.cpp
+        walker.h)
 
 target_link_libraries(RandomWalk SDL2)
