@@ -9,8 +9,8 @@
 
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 960;
-int RECT_WIDTH = 2;
-int RECT_HEIGHT = 2;
+int RECT_WIDTH = 4;
+int RECT_HEIGHT = 4;
 int GAP = 2;
 
 int main() {
@@ -35,16 +35,38 @@ int main() {
 
     SDL_RenderPresent(renderer);
 
+    SDL_Color black = SDL_Color(0, 0, 0, 255);
+    SDL_Color blue = SDL_Color(25, 130, 196, 255);
+    SDL_Color red = SDL_Color(255, 89, 94, 255);
+    SDL_Color green = SDL_Color(138, 201, 38, 255);
+    SDL_Color purple = SDL_Color(106, 76, 147, 255);
+    SDL_Rect rect1 = {(SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT};
+
     //create struct to store rectangles at each frame, holds trails
-    walker walker1 = walker((SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT, 0, 0, 0, 255);
+    walker walker1 = walker(black, rect1);
+    walker walker2 = walker(blue, rect1);
+    walker walker3 = walker(red, rect1);
+    walker walker4 = walker(green, rect1);
+    walker walker5 = walker(purple, rect1);
 
 
     //create vector to store trail of rectangle
     std::vector<walker> walkers;
 
-
     walkers.push_back(walker1);
     SDL_RenderFillRect(renderer, &walker1.rect);
+
+    walkers.push_back(walker2);
+    SDL_RenderFillRect(renderer, &walker2.rect);
+
+    walkers.push_back(walker3);
+    SDL_RenderFillRect(renderer, &walker3.rect);
+
+    walkers.push_back(walker4);
+    SDL_RenderFillRect(renderer, &walker4.rect);
+
+    walkers.push_back(walker5);
+    SDL_RenderFillRect(renderer, &walker5.rect);
 
     //event loop
     bool running = true;
@@ -57,46 +79,20 @@ int main() {
             }
         }
 
-        //generate random number each frame using seed from above
-        int randNum1 = dist(rng);
-
         //depending on which direction is generated, we move the rectangle GAP widths/heights and store move in vector
-        switch (randNum1) {
-            case 1:
-                for (int i = 0; i < GAP; i++) {
-                    walker1.rect.x += RECT_WIDTH;
-                    walkers.push_back(walker1);
-                }
-                break;
-            case 2:
-                for (int i = 0; i < GAP; i++) {
-                    walker1.rect.y += RECT_HEIGHT;
-                    walkers.push_back(walker1);
-                }
-                break;
-            case 3:
-                for (int i = 0; i < GAP; i++) {
-                    walker1.rect.x -= RECT_WIDTH;
-                    walkers.push_back(walker1);
-                    }
-                break;
-            case 4:
-                 for (int i = 0; i < GAP; i++) {
-                     walker1.rect.y -= RECT_HEIGHT;
-                     walkers.push_back(walker1);
-                 }
-                break;
-            default:
-                break;
-        }
+        walker1.move(dist(rng), GAP, walkers);
+        walker2.move(dist(rng), GAP, walkers);
+        walker3.move(dist(rng), GAP, walkers);
+        walker4.move(dist(rng), GAP, walkers);
+        walker5.move(dist(rng), GAP, walkers);
 
         //redraw screen
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
 
         //draw each move in vector
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         for (walker& walker : walkers) {
+            SDL_SetRenderDrawColor(renderer, walker.color.r, walker.color.g, walker.color.b, walker.color.a);
             SDL_RenderFillRect(renderer, &walker.rect);
         }
 
@@ -104,9 +100,8 @@ int main() {
         SDL_RenderPresent(renderer);
 
         //delay
-        SDL_Delay(10);
+        SDL_Delay(50);
 
-        // std::cout << " " << randNum1 << std::endl;
     }
 
 

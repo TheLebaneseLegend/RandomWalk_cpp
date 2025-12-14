@@ -1,11 +1,31 @@
 #include "walker.h"
 
+walker::walker(SDL_Color color, SDL_Rect rect)
+    : color(color),
+    rect(rect)
+{}
 
-// void walker::move(int x, int y) {
-//
-// }
+void walker::move(int direction, int gap, std::vector<walker>& trail) {
 
-walker::walker(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-    color = {r, g, b, a};
-    rect = {x, y, w, h};
+    for (int i = 0; i < gap; i++) {
+
+        switch (direction) {
+            case 1:
+                rect.x += RECT_WIDTH;
+                break;
+            case 2:
+                rect.y += RECT_HEIGHT;
+                break;
+            case 3:
+                rect.x -= RECT_WIDTH;
+                break;
+            case 4:
+                rect.y -= RECT_HEIGHT;
+                break;
+        }
+
+        trail.push_back(*this);
+
+    }
 }
+
