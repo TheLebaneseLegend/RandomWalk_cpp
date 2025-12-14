@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <random>
 #include <chrono>
+#include "walker.h"
 
 int SCREEN_WIDTH = 1280;
 int SCREEN_HEIGHT = 960;
@@ -35,23 +36,17 @@ int main() {
     SDL_RenderPresent(renderer);
 
     //create struct to store rectangles at each frame, holds trails
-    struct DrawnRect {
-        SDL_Rect rect;
-        SDL_Color color;
-    };
+    walker walker1 = walker((SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT, 0, 0, 0, 255);
 
     //set rectangle color
-    SDL_Color black = { 0, 0, 0, 255 };
+    walker1.set_color(0, 0, 0, 255);
 
     //create vector to store trail of rectangle
-    std::vector<DrawnRect> rects;
+    std::vector<walker> walkers;
 
-    //draw first rectangle and add to screen
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_Rect rect1 = {(SCREEN_WIDTH / 2) - (RECT_WIDTH / 2), (SCREEN_HEIGHT / 2) - (RECT_HEIGHT / 2), RECT_WIDTH, RECT_HEIGHT};
 
-    rects.push_back({rect1, black});
-    SDL_RenderFillRect(renderer, &rect1);
+    walkers.push_back(walker1);
+    SDL_RenderFillRect(renderer, &walker1.rect);
 
     //event loop
     bool running = true;
@@ -71,26 +66,26 @@ int main() {
         switch (randNum1) {
             case 1:
                 for (int i = 0; i < GAP; i++) {
-                    rect1.x += RECT_WIDTH;
-                    rects.push_back({rect1, black});
+                    walker1.rect.x += RECT_WIDTH;
+                    walkers.push_back(walker1);
                 }
                 break;
             case 2:
                 for (int i = 0; i < GAP; i++) {
-                    rect1.y += RECT_HEIGHT;
-                    rects.push_back({rect1, black});
+                    walker1.rect.y += RECT_HEIGHT;
+                    walkers.push_back(walker1);
                 }
                 break;
             case 3:
                 for (int i = 0; i < GAP; i++) {
-                    rect1.x -= RECT_WIDTH;
-                    rects.push_back({rect1, black});
+                    walker1.rect.x -= RECT_WIDTH;
+                    walkers.push_back(walker1);
                     }
                 break;
             case 4:
                  for (int i = 0; i < GAP; i++) {
-                     rect1.y -= RECT_HEIGHT;
-                     rects.push_back({rect1, black});
+                     walker1.rect.y -= RECT_HEIGHT;
+                     walkers.push_back(walker1);
                  }
                 break;
             default:
@@ -103,16 +98,15 @@ int main() {
 
         //draw each move in vector
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        for (DrawnRect& rect : rects) {
-            SDL_RenderFillRect(renderer, &rect.rect);
-
+        for (walker& walker : walkers) {
+            SDL_RenderFillRect(renderer, &walker.rect);
         }
 
         //write to screen
         SDL_RenderPresent(renderer);
 
         //delay
-        //SDL_Delay(10);
+        SDL_Delay(10);
 
         // std::cout << " " << randNum1 << std::endl;
     }

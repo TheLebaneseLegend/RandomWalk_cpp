@@ -3,6 +3,7 @@ project(RandomWalk)
 
 set(CMAKE_CXX_STANDARD 20)
 set(SDL2_PATH /opt/homebrew)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 include_directories(${SDL2_PATH}/include/SDL2)
 link_directories(${SDL2_PATH}/lib)
