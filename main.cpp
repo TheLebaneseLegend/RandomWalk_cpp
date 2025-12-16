@@ -100,7 +100,7 @@ int main() {
         SDL_RenderPresent(renderer);
 
         //delay
-        SDL_Delay(50);
+        //SDL_Delay(25);
 
     }
 
